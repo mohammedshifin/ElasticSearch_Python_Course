@@ -15,8 +15,12 @@
         @keyup.enter="handleSearch"
       />
       <span class="icon-container">
-        <i v-if="searchQuery" class="fas fa-times clear-icon" @click="clearSearch"></i>
-        <i class="fas fa-paper-plane search-icon" @click="handleSearch"></i>
+        <transition name="fade">
+          <i v-if="searchQuery" class="fas fa-times clear-icon" @click="clearSearch"></i>
+        </transition>
+        <transition name="fade">
+          <i v-if="searchQuery" class="fas fa-paper-plane search-icon" @click="handleSearch"></i>
+        </transition>
       </span>
     </div>
   </div>
@@ -95,6 +99,7 @@ export default {
   cursor: pointer;
   color: #ea5e13;
   font-size: 1.2rem;
+  transition: color 0.3s ease;
 }
 
 .clear-icon:hover, .search-icon:hover {
@@ -111,5 +116,22 @@ export default {
 
 .input_text:focus {
   border-color: #ea5e13 !important;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+.fade-enter-to,
+.fade-leave-from {
+  opacity: 1;
+  transform: translateY(0);
 }
 </style>
