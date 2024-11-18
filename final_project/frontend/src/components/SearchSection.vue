@@ -1,5 +1,5 @@
 <template>
-  <div class="search_container">
+  <div class="container">
     <img
       src="../assets/galaxy_logo_white.svg"
       class="image_logo"
@@ -52,7 +52,7 @@ export default {
 </script>
 
 <style scoped>
-.search_container {
+.container {
   margin-top: 10rem
 }
 

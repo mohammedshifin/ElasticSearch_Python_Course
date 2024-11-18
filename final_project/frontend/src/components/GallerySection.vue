@@ -1,5 +1,5 @@
 <template>
-  <div class="search_container">
+  <div class="container">
     <div class="gallery_grid">
       <div
         v-for="(item, index) in searchResults"
@@ -74,7 +74,7 @@ export default {
 </script>
 
 <style scoped>
-.search_container {
+.container {
   margin-top: 5rem;
   margin-bottom: 5rem;
 }

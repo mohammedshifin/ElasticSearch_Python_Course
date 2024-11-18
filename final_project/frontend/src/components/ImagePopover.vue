@@ -85,24 +85,6 @@ export default {
   z-index: 1;
 }
 
-.action-button {
-  width: 2.5rem;
-  height: 2.5rem;
-  border: none;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  backdrop-filter: blur(5px);
-}
-
-.action-button i {
-  font-size: 1rem;
-  color: white;
-}
-
 .close-button {
   background: rgba(234, 94, 19, 0.8);
 }
