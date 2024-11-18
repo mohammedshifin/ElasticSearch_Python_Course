@@ -6,13 +6,19 @@
       alt="My Universe Hub logo"
     />
 
-    <InputText
-      class="input_text"
-      type="text"
-      v-model="searchQuery"
-      placeholder="Andromeda galaxy"
-      @keyup.enter="handleSearch"
-    />
+    <div class="search-container">
+      <InputText
+        class="input_text"
+        type="text"
+        v-model="searchQuery"
+        placeholder="Andromeda galaxy"
+        @keyup.enter="handleSearch"
+      />
+      <span class="icon-container">
+        <i v-if="searchQuery" class="fas fa-times clear-icon" @click="clearSearch"></i>
+        <i class="fas fa-paper-plane search-icon" @click="handleSearch"></i>
+      </span>
+    </div>
   </div>
 </template>
 
@@ -41,11 +47,18 @@ export default {
         .get(endpoint)
         .then((response) => {
           let searchResults = response.data.hits;
-          this.$emit("search-results", searchResults);
+          // Add timestamp to force reactivity
+          this.$emit("search-results", {
+            results: searchResults,
+            timestamp: Date.now()
+          });
         })
         .catch((error) => {
           console.error(error);
         });
+    },
+    clearSearch() {
+      this.searchQuery = "";
     },
   },
 };
@@ -62,8 +75,34 @@ export default {
   max-width: 10rem;
 }
 
-.input_text {
+.search-container {
+  position: relative;
+  display: inline-block;
   margin-top: 3rem;
+}
+
+.icon-container {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.clear-icon, .search-icon {
+  cursor: pointer;
+  color: #ea5e13;
+  font-size: 1.2rem;
+}
+
+.clear-icon:hover, .search-icon:hover {
+  color: #666;
+}
+
+.input_text {
+  padding-right: 80px;
   width: 60rem;
   height: 3rem;
   border-radius: 0rem;

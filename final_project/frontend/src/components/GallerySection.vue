@@ -2,8 +2,8 @@
   <div class="container">
     <div class="gallery_grid">
       <div
-        v-for="(item, index) in searchResults"
-        :key="item['_source'].image_url"
+        v-for="(item, index) in results"
+        :key="`${item['_source'].image_url}-${searchTimestamp}`"
         class="gallery_card"
       >
         <div class="card_content">
@@ -44,7 +44,7 @@ export default {
   },
   props: {
     searchResults: {
-      type: Array,
+      type: Object,
       required: true,
     },
   },
@@ -53,13 +53,22 @@ export default {
       imageLoaded: {},
       showPopover: false,
       selectedImage: null,
+      searchTimestamp: 0,
     };
   },
+  computed: {
+    results() {
+      return this.searchResults.results || [];
+    }
+  },
   watch: {
-    searchResults() {
-      // Reset image loaded states when search results change
-      this.imageLoaded = {};
-    },
+    'searchResults.timestamp': {
+      handler(newVal) {
+        this.searchTimestamp = newVal;
+        this.imageLoaded = {};
+      },
+      immediate: true
+    }
   },
   methods: {
     showImage(image) {
