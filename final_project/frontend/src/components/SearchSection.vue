@@ -68,7 +68,6 @@ export default {
   height: 3rem;
   border-radius: 0rem;
   font-size: 1.2rem;
-  font-family: "Roboto Condensed", sans-serif;
 }
 
 .input_text:focus {
