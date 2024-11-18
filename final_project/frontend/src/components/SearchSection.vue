@@ -6,11 +6,18 @@
       alt="My Universe Hub logo"
     />
 
-    <InputText class="input_text" type="text" v-model="searchQuery" placeholder="Andromeda galaxy" />
+    <InputText
+      class="input_text"
+      type="text"
+      v-model="searchQuery"
+      placeholder="Andromeda galaxy"
+      @keyup.enter="handleSearch"
+    />
   </div>
 </template>
 
 <script>
+import axios from "axios";
 import InputText from "primevue/inputtext";
 
 export default {
@@ -22,6 +29,24 @@ export default {
     return {
       searchQuery: "",
     };
+  },
+  methods: {
+    async handleSearch() {
+      if (this.searchQuery === "") {
+        return;
+      }
+
+      const endpoint = `${axios.defaults.baseURL}/api/v1/search?search_query=${this.searchQuery}`;
+      await axios
+        .get(endpoint)
+        .then((response) => {
+          let searchResults = response.data.hits;
+          this.$emit("search-results", searchResults);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    },
   },
 };
 </script>

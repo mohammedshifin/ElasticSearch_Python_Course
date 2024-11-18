@@ -1,5 +1,5 @@
 <template>
-  <SearchSection />
+  <SearchSection @search-results="handleSearchResults" />
 </template>
 
 <script>
@@ -9,6 +9,16 @@ export default {
   name: "HomeView",
   components: {
     SearchSection,
+  },
+  data() {
+    return {
+      searchResults: [],
+    };
+  },
+  methods: {
+    handleSearchResults(results) {
+      this.searchResults = results;
+    },
   },
 };
 </script>
