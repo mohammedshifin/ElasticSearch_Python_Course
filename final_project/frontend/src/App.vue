@@ -15,6 +15,10 @@ export default {
 </script>
 
 <style>
+body {
+  font-family: "Roboto Condensed", sans-serif;
+}
+
 .search_container {
   display: flex;
   flex-direction: column;
