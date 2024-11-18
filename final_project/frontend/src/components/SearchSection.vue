@@ -102,6 +102,16 @@ export default {
   transition: color 0.3s ease;
 }
 
+.clear-icon {
+  font-size: 1.3rem;
+}
+
+.search-icon {
+  font-size: 1.1rem;
+  position: relative;
+  top: -1px;
+}
+
 .clear-icon:hover, .search-icon:hover {
   color: #666;
 }
