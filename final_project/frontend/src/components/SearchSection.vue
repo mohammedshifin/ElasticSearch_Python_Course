@@ -1,10 +1,12 @@
 <template>
   <div class="container">
-    <img
-      src="../assets/galaxy_logo_white.svg"
-      class="image_logo"
-      alt="My Universe Hub logo"
-    />
+    <a href="/">
+      <img
+        src="../assets/galaxy_logo_white.svg"
+        class="image_logo"
+        alt="My Universe Hub logo"
+      />
+    </a>
 
     <div class="search-container">
       <InputText
