@@ -4,15 +4,15 @@ import router from "./router";
 import store from "./store";
 import PrimeVue from "primevue/config";
 import Aura from "@primevue/themes/aura"
+import axios from "axios";
 
+axios.defaults.baseURL = 'http://localhost:8000'
 const app = createApp(App);
-
 app.use(store);
-app.use(router);
+app.use(router, axios);
 app.use(PrimeVue, {
     theme: {
         preset: Aura
     }
 });
-
 app.mount("#app");
