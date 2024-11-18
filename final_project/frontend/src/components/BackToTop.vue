@@ -34,7 +34,7 @@ export default {
       })
     },
     handleScroll () {
-      this.showBackToTopButton = window.scrollY > 100
+      this.showBackToTopButton = window.scrollY > 200
     }
   }
 }

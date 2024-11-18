@@ -83,11 +83,11 @@ export default {
 
 .icon-container {
   position: absolute;
-  right: 10px;
+  right: 0.625rem;
   top: 50%;
   transform: translateY(-50%);
   display: flex;
-  gap: 10px;
+  gap: 0.75rem;
   align-items: center;
 }
 
