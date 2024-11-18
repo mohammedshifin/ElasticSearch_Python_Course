@@ -13,3 +13,13 @@ export default {
   },
 };
 </script>
+
+<style>
+.search_container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-left: 5rem;
+  margin-right: 5rem;
+}
+</style>

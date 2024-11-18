@@ -53,12 +53,7 @@ export default {
 
 <style scoped>
 .search_container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 10rem;
-  margin-left: 5rem;
-  margin-right: 5rem;
+  margin-top: 10rem
 }
 
 .image_logo {
