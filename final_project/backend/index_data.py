@@ -4,15 +4,15 @@ import json
 from tqdm import tqdm
 from typing import List
 from pprint import pprint
+from config import INDEX_NAME
 from elasticsearch import Elasticsearch
 
 
 def index_data(documents: List[dict]):
-    index_name = 'apod'
     es = _get_es_client(max_retries=5, sleep_time=5)
-    _create_index(es=es, index_name=index_name)
-    _insert_documents(es=es, index_name=index_name, documents=documents)
-    pprint(f'Indexed {len(documents)} documents into Elasticsearch index "{index_name}"')
+    _create_index(es=es, index_name=INDEX_NAME)
+    _insert_documents(es=es, index_name=INDEX_NAME, documents=documents)
+    pprint(f'Indexed {len(documents)} documents into Elasticsearch index "{INDEX_NAME}"')
 
 
 def _get_es_client(max_retries: int = 5, sleep_time: int = 5) -> Elasticsearch:
@@ -31,15 +31,15 @@ def _get_es_client(max_retries: int = 5, sleep_time: int = 5) -> Elasticsearch:
     raise ConnectionError("Failed to connect to Elasticsearch after multiple attempts.")
 
 
-def _create_index(es: Elasticsearch, index_name: str):
-    es.indices.delete(index=index_name, ignore_unavailable=True)
-    es.indices.create(index=index_name)
+def _create_index(es: Elasticsearch):
+    es.indices.delete(index=INDEX_NAME, ignore_unavailable=True)
+    es.indices.create(index=INDEX_NAME)
 
 
-def _insert_documents(es: Elasticsearch, index_name: str, documents: List[dict]):
+def _insert_documents(es: Elasticsearch, documents: List[dict]):
     operations = []
     for document in tqdm(documents, total=len(documents), desc='Indexing documents'):
-        operations.append({'index': {'_index': index_name}})
+        operations.append({'index': {'_index': INDEX_NAME}})
         operations.append(document)
     return es.bulk(operations=operations)
 
