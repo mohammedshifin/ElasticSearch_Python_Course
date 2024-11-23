@@ -40,6 +40,12 @@
     <Transition name="fade">
       <PaginationBar v-show="canPerformSearch" @page-size-change="setPageSize" />
     </Transition>
+
+    <Transition name="fade">
+      <div v-if="noResultsFound" class="no-results-message">
+        <i class="fas fa-search"></i> No results found.
+      </div>
+    </Transition>
   </div>
 </template>
 
@@ -61,6 +67,7 @@ export default {
       pageOffset: 0,
       errorExists: false,
       errorMessage: "",
+      noResultsFound: false,
     };
   },
   watch: {
@@ -92,6 +99,7 @@ export default {
         .get(endpoint)
         .then((response) => {
           let searchResults = response.data.hits;
+          this.noResultsFound = searchResults.length === 0;
           // Add timestamp to force reactivity
           this.$emit("search-results", {
             results: searchResults,
@@ -197,5 +205,16 @@ export default {
   color: rgb(255, 58, 58);
   width: 60rem;
   padding-left: 0.75rem;
+}
+
+.no-results-message {
+  margin-top: 2rem;
+  text-align: center;
+  font-size: 1.5rem;
+  color: #666;
+}
+
+.no-results-message i {
+  margin-right: 0.5rem;
 }
 </style>
