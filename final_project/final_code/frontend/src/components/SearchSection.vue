@@ -169,7 +169,7 @@ export default {
 .clear-icon,
 .search-icon {
   cursor: pointer;
-  color: #ea5e13;
+  color: var(--primary-color);
   transition: color 0.3s ease;
 }
 
@@ -196,7 +196,7 @@ export default {
 }
 
 .input_text:focus {
-  border-color: #ea5e13 !important;
+  border-color: var(--primary-color) !important;
 }
 
 .fade-enter-active,

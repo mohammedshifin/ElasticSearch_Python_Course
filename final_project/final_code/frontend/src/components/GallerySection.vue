@@ -148,7 +148,7 @@ export default {
 }
 
 .card_title {
-  color: #ea5e13;
+  color: var(--primary-color);
   margin: 0 0 1rem 0rem;
   font-size: 2rem;
   font-weight: bold;

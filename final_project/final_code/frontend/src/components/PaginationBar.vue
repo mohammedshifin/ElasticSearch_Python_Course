@@ -115,6 +115,8 @@ export default {
 .page-size-selector {
   margin-left: 1rem;
   border-radius: 0rem;
+  height: 3rem;
+  background: transparent;
 }
 
 .pagination-buttons {

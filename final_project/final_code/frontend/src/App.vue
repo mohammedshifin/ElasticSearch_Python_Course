@@ -15,6 +15,12 @@ export default {
 </script>
 
 <style>
+/* Customize PrimeVue's default color */
+:root {
+  --primary-color: #ea5e13;
+  --p-select-focus-border-color: var(--primary-color) !important;
+}
+
 body {
   font-family: "Roboto Condensed", sans-serif;
 }
