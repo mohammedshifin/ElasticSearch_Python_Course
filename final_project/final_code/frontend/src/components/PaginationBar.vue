@@ -1,10 +1,25 @@
 <template>
   <div class="pagination-bar-container">
+    <div class="year-filter">
+      <span class="medium-text">Year</span>
+      <Select
+        checkmark
+        showClear=""
+        class="custom-selector medium-text"
+        v-model="selectedYear"
+        :options="yearOptions"
+        placeholder="All years"
+        :highlightOnSelect="false"
+        @update:modelValue="handleYearChange"
+        size="large"
+      />
+    </div>
+
     <div class="page-size">
       <span class="medium-text">Items per page</span>
       <Select
         checkmark
-        class="page-size-selector medium-text"
+        class="custom-selector medium-text"
         v-model="selectedPageSize"
         :options="pageSizes"
         :placeholder="selectedPageSize"
@@ -70,16 +85,24 @@ export default {
       type: Number,
       required: true,
     },
+    yearOptions: {
+      type: Object,
+      required: true,
+    },
   },
   data() {
     return {
       selectedPageSize: 10,
       pageSizes: [10, 20, 50],
+      selectedYear: null,
     };
   },
   methods: {
     handlePageSizeChange() {
       this.$emit("page-size-change", this.selectedPageSize);
+    },
+    handleYearChange() {
+      this.$emit("year-change", this.selectedYear);
     },
     goToFirstPage() {
       this.$emit("go-to-page", 1);
@@ -112,7 +135,7 @@ export default {
   margin-top: 1rem;
 }
 
-.page-size-selector {
+.custom-selector {
   margin-left: 1rem;
   border-radius: 0rem;
   height: 3rem;
