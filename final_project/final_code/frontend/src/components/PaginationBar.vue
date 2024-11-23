@@ -117,6 +117,7 @@ export default {
   border-radius: 0rem;
   height: 3rem;
   background: transparent;
+  color: white !important;
 }
 
 .pagination-buttons {
