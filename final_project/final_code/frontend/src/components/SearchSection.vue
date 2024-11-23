@@ -28,13 +28,6 @@
             @click="clearSearch"
           ></i>
         </Transition>
-        <Transition name="fade">
-          <i
-            v-if="searchQuery"
-            class="fas fa-paper-plane search-icon medium-text"
-            @click="handleSearch"
-          ></i>
-        </Transition>
       </span>
     </div>
 
@@ -197,25 +190,14 @@ export default {
   align-items: center;
 }
 
-.clear-icon,
-.search-icon {
+.clear-icon {
   cursor: pointer;
   color: var(--primary-color);
   transition: color 0.3s ease;
+  font-size: 1.5rem;
 }
 
-.clear-icon {
-  font-size: 1.3rem;
-}
-
-.search-icon {
-  font-size: 1.1rem;
-  position: relative;
-  top: -1px;
-}
-
-.clear-icon:hover,
-.search-icon:hover {
+.clear-icon:hover {
   color: #666;
 }
 
