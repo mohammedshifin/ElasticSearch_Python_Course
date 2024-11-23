@@ -16,67 +16,107 @@ app.add_middleware(
 )
 
 @app.get("/api/v1/search/")
-async def search(search_query: str, skip: int = 0, limit: int = 10) -> dict:
+async def search(search_query: str, skip: int = 0, limit: int = 10, year: str | None = None) -> dict:
+    print(f"Year {year}")
     try:
         es = get_es_client(max_retries=1, sleep_time=0)
-        response = perform_search(es=es, search_query=search_query, skip=skip, limit=limit)
+        query = {
+            "bool": {
+                "must": [
+                    {
+                        "multi_match": {
+                            "query": search_query,
+                            "fields": ["title", "explanation"],
+                        }
+                    }
+                ]
+            }
+        }
 
-        if not response:
-            return {"hits": [], "max_pages": 0, "docs_per_year": {}}
+        if year:
+            query["bool"]["filter"] = [
+                {
+                    "range": {
+                        "date": {
+                            "gte": f"{year}-01-01",
+                            "lte": f"{year}-12-31",
+                            "format": "yyyy-MM-dd"
+                        }
+                    }
+                }
+            ]
+            
+        response = es.search(
+            index=INDEX_NAME,
+            body={
+                "query": query,
+                "from": skip,
+                "size": limit,
+            },
+            filter_path=[
+                "hits.hits._source",
+                "hits.hits._score",
+                "hits.total",
+            ]
+        )
 
         total_hits = get_total_hits(response)
         max_pages = calculate_max_pages(total_hits, limit)
-        docs_per_year = extract_docs_per_year(response)
 
         return {
-            "hits": response["hits"]["hits"],
+            "hits": response["hits"].get("hits", []),
             "max_pages": max_pages,
-            "docs_per_year": docs_per_year,
         }
     except ConnectionError:
         return handle_connection_error()
-
-
-def perform_search(es, search_query: str, skip: int, limit: int) -> dict:
-    """
-    Executes the search query on Elasticsearch.
-    """
-    return es.search(
-        index=INDEX_NAME,
-        body={
-            "query": {
-                "multi_match": {
-                    "query": search_query,
-                    "fields": ["title", "explanation"],
-                }
-            },
-            "from": skip,
-            "size": limit,
-            "aggs": {
-                "docs_per_year": {
-                    "date_histogram": {
-                        "field": "date",
-                        "calendar_interval": "year",  # Group by year
-                        "format": "yyyy"             # Format the year in the response
-                    }
-                }
-            },
-        },
-        filter_path=[
-            "hits.hits._source",
-            "hits.hits._score",
-            "hits.total",
-            "aggregations.docs_per_year"
-        ]
-    )
-
-
+    
+    
 def get_total_hits(response: dict) -> int:
     return response["hits"]["total"]["value"]
 
 
 def calculate_max_pages(total_hits: int, limit: int) -> int:
     return (total_hits + limit - 1) // limit
+    
+    
+@app.get("/api/v1/get_docs_per_year_count/")
+async def get_docs_per_year_count(search_query: str) -> dict:
+    try:
+        es = get_es_client(max_retries=1, sleep_time=0)
+        query = {
+            "bool": {
+                "must": [
+                    {
+                        "multi_match": {
+                            "query": search_query,
+                            "fields": ["title", "explanation"],
+                        }
+                    }
+                ]
+            }
+        }
+            
+        response = es.search(
+            index=INDEX_NAME,
+            body={
+                "query": query,
+                "aggs": {
+                    "docs_per_year": {
+                        "date_histogram": {
+                            "field": "date",
+                            "calendar_interval": "year",  # Group by year
+                            "format": "yyyy"             # Format the year in the response
+                        }
+                    }
+                },
+            },
+            filter_path=[
+                "aggregations.docs_per_year"
+            ]
+        )
+        return {"docs_per_year": extract_docs_per_year(response)}
+    except ConnectionError:
+        return handle_connection_error()
 
 
 def extract_docs_per_year(response: dict) -> dict:
