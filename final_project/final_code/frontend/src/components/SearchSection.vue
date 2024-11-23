@@ -10,37 +10,62 @@
 
     <div class="search-container">
       <InputText
-        class="input_text"
+        class="input_text medium-text"
         type="text"
         v-model="searchQuery"
         placeholder="Andromeda galaxy"
         @keyup.enter="handleSearch"
       />
       <span class="icon-container">
-        <transition name="fade">
-          <i v-if="searchQuery" class="fas fa-times clear-icon" @click="clearSearch"></i>
-        </transition>
-        <transition name="fade">
-          <i v-if="searchQuery" class="fas fa-paper-plane search-icon" @click="handleSearch"></i>
-        </transition>
+        <Transition name="fade">
+          <i
+            v-if="searchQuery"
+            class="fas fa-times clear-icon"
+            @click="clearSearch"
+          ></i>
+        </Transition>
+        <Transition name="fade">
+          <i
+            v-if="searchQuery"
+            class="fas fa-paper-plane search-icon medium-text"
+            @click="handleSearch"
+          ></i>
+        </Transition>
       </span>
     </div>
+
+    <Transition name="fade">
+      <PaginationBar v-show="searchQuery" @page-size-change="setPageSize" />
+    </Transition>
   </div>
 </template>
 
 <script>
 import axios from "axios";
 import InputText from "primevue/inputtext";
+import PaginationBar from "./PaginationBar.vue";
 
 export default {
   name: "SearchSection",
   components: {
     InputText,
+    PaginationBar,
   },
   data() {
     return {
       searchQuery: "",
+      pageSize: 10,
+      pageOffset: 0,
     };
+  },
+  watch: {
+    searchQuery() {
+      this.pageOffset = 0;
+      this.handleSearch();
+    },
+    pageSize() {
+      this.handleSearch();
+    },
   },
   methods: {
     async handleSearch() {
@@ -48,7 +73,7 @@ export default {
         return;
       }
 
-      const endpoint = `${axios.defaults.baseURL}/api/v1/search?search_query=${this.searchQuery}`;
+      const endpoint = `${axios.defaults.baseURL}/api/v1/search?search_query=${this.searchQuery}&skip=${this.pageOffset}&limit=${this.pageSize}`;
       await axios
         .get(endpoint)
         .then((response) => {
@@ -56,7 +81,7 @@ export default {
           // Add timestamp to force reactivity
           this.$emit("search-results", {
             results: searchResults,
-            timestamp: Date.now()
+            timestamp: Date.now(),
           });
         })
         .catch((error) => {
@@ -66,13 +91,16 @@ export default {
     clearSearch() {
       this.searchQuery = "";
     },
+    setPageSize(pageSize) {
+      this.pageSize = pageSize;
+    },
   },
 };
 </script>
 
 <style scoped>
 .container {
-  margin-top: 10rem
+  margin-top: 10rem;
 }
 
 .image_logo {
@@ -97,10 +125,10 @@ export default {
   align-items: center;
 }
 
-.clear-icon, .search-icon {
+.clear-icon,
+.search-icon {
   cursor: pointer;
   color: #ea5e13;
-  font-size: 1.2rem;
   transition: color 0.3s ease;
 }
 
@@ -114,7 +142,8 @@ export default {
   top: -1px;
 }
 
-.clear-icon:hover, .search-icon:hover {
+.clear-icon:hover,
+.search-icon:hover {
   color: #666;
 }
 
@@ -123,7 +152,6 @@ export default {
   width: 60rem;
   height: 3rem;
   border-radius: 0rem;
-  font-size: 1.2rem;
 }
 
 .input_text:focus {
@@ -138,7 +166,7 @@ export default {
 .fade-enter-from,
 .fade-leave-to {
   opacity: 0;
-  transform: translateY(10px);
+  transform: translateY(1rem);
 }
 
 .fade-enter-to,
