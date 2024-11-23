@@ -38,7 +38,13 @@
     </div>
 
     <Transition name="fade">
-      <PaginationBar v-show="canPerformSearch" @page-size-change="setPageSize" />
+      <PaginationBar
+        v-show="canPerformSearch"
+        :currentPage="currentPage"
+        :maxPages="max_pages"
+        @page-size-change="handlePageSizeChange"
+        @go-to-page="handlePageChange"
+      />
     </Transition>
 
     <Transition name="fade">
@@ -65,6 +71,8 @@ export default {
       searchQuery: "",
       pageSize: 10,
       pageOffset: 0,
+      currentPage: 1,
+      max_pages: null,
       errorExists: false,
       errorMessage: "",
       noResultsFound: false,
@@ -78,6 +86,9 @@ export default {
       }
     },
     pageSize() {
+      this.handleSearch();
+    },
+    pageOffset() {
       this.handleSearch();
     },
   },
@@ -100,6 +111,7 @@ export default {
         .then((response) => {
           let searchResults = response.data.hits;
           this.noResultsFound = searchResults.length === 0;
+          this.max_pages = response.data.max_pages;
           // Add timestamp to force reactivity
           this.$emit("search-results", {
             results: searchResults,
@@ -116,8 +128,12 @@ export default {
     clearSearch() {
       this.searchQuery = "";
     },
-    setPageSize(pageSize) {
+    handlePageSizeChange(pageSize) {
       this.pageSize = pageSize;
+    },
+    handlePageChange(page) {
+      this.pageOffset = (page - 1) * this.pageSize;
+      this.currentPage = page;
     },
   },
 };
