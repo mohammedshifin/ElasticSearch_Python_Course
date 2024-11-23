@@ -8,19 +8,19 @@ from utils import get_es_client
 from elasticsearch import Elasticsearch
 
 
-def index_data(documents: List[dict]):
+def index_data(documents: List[dict]) -> None:
     es = get_es_client(max_retries=5, sleep_time=5)
-    _create_index(es=es, index_name=INDEX_NAME)
-    _insert_documents(es=es, index_name=INDEX_NAME, documents=documents)
+    _ = _create_index(es=es)
+    _ = _insert_documents(es=es, documents=documents)
     pprint(f'Indexed {len(documents)} documents into Elasticsearch index "{INDEX_NAME}"')
 
 
-def _create_index(es: Elasticsearch):
+def _create_index(es: Elasticsearch) -> dict:
     es.indices.delete(index=INDEX_NAME, ignore_unavailable=True)
-    es.indices.create(index=INDEX_NAME)
+    return es.indices.create(index=INDEX_NAME)
 
 
-def _insert_documents(es: Elasticsearch, documents: List[dict]):
+def _insert_documents(es: Elasticsearch, documents: List[dict]) -> dict:
     operations = []
     for document in tqdm(documents, total=len(documents), desc='Indexing documents'):
         operations.append({'index': {'_index': INDEX_NAME}})
@@ -29,7 +29,7 @@ def _insert_documents(es: Elasticsearch, documents: List[dict]):
 
 
 if __name__ == '__main__':
-    with open('../../data/apod.json') as f:
+    with open('../../../data/apod.json') as f:
         documents = json.load(f)
 
     index_data(documents=documents)
