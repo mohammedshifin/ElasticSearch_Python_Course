@@ -35,6 +35,7 @@
         :disabled="currentPage === 1"
         @click="goToFirstPage"
         class="pagination-btn medium-text"
+        v-tooltip.bottom="'Go to the first page'"
       >
         <i class="fas fa-angle-double-left"></i> First
       </button>
@@ -42,6 +43,7 @@
         :disabled="currentPage === 1"
         @click="goToPreviousPage"
         class="pagination-btn medium-text"
+        v-tooltip.bottom="'Go to the previous page'"
       >
         <i class="fas fa-chevron-left"></i> Previous
       </button>
@@ -53,6 +55,7 @@
       <button
         :disabled="currentPage === maxPages"
         @click="goToNextPage"
+        v-tooltip.bottom="'Go to the next page'"
         class="pagination-btn medium-text"
       >
         Next <i class="fas fa-chevron-right"></i>
@@ -60,6 +63,7 @@
       <button
         :disabled="currentPage === maxPages"
         @click="goToLastPage"
+        v-tooltip.bottom="'Go to the last page'"
         class="pagination-btn medium-text"
       >
         Last <i class="fas fa-angle-double-right"></i>

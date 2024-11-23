@@ -3,6 +3,7 @@ import App from "./App.vue";
 import router from "./router";
 import store from "./store";
 import PrimeVue from "primevue/config";
+import Tooltip from 'primevue/tooltip';
 import Aura from "@primevue/themes/aura"
 import axios from "axios";
 
@@ -15,4 +16,5 @@ app.use(PrimeVue, {
         preset: Aura
     }
 });
+app.directive('tooltip', Tooltip);
 app.mount("#app");
