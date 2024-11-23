@@ -148,7 +148,7 @@ export default {
   display: block;
   width: 100%;
   max-width: 10rem;
-  margin-bottom: 1rem;
+  margin-bottom: 5rem;
 }
 
 .search-container {
@@ -189,14 +189,9 @@ export default {
 }
 
 .input_text {
-  padding-right: 80px;
   width: 60rem;
   height: 3rem;
   border-radius: 0rem;
-}
-
-.input_text:focus {
-  border-color: var(--primary-color) !important;
 }
 
 .fade-enter-active,
