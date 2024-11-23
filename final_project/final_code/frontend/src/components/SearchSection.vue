@@ -11,6 +11,7 @@
     <Transition name="fade">
       <div v-if="errorExists" class="error-message">{{ errorMessage }}</div>
     </Transition>
+
     <div class="search-container">
       <InputText
         class="input_text medium-text"
@@ -42,7 +43,9 @@
         v-show="canPerformSearch"
         :currentPage="currentPage"
         :maxPages="max_pages"
+        :yearOptions="yearOptions"
         @page-size-change="handlePageSizeChange"
+        @year-change="handleYearChange"
         @go-to-page="handlePageChange"
       />
     </Transition>
@@ -76,12 +79,15 @@ export default {
       errorExists: false,
       errorMessage: "",
       noResultsFound: false,
+      yearOptions: {},
+      selectedYear: null,
     };
   },
   watch: {
     searchQuery() {
       this.pageOffset = 0;
       if (this.searchQuery !== "") {
+        this.getYearOptions();
         this.handleSearch();
       }
     },
@@ -89,6 +95,9 @@ export default {
       this.handleSearch();
     },
     pageOffset() {
+      this.handleSearch();
+    },
+    selectedYear() {
       this.handleSearch();
     },
   },
@@ -105,13 +114,15 @@ export default {
         return;
       }
 
-      const endpoint = `${axios.defaults.baseURL}/api/v1/search?search_query=${this.searchQuery}&skip=${this.pageOffset}&limit=${this.pageSize}`;
+      const year = this.selectedYear ? this.selectedYear.slice(0, 4) : ''
+      const endpoint = `${axios.defaults.baseURL}/api/v1/search?search_query=${this.searchQuery}&skip=${this.pageOffset}&limit=${this.pageSize}&year=${year}`;
       await axios
         .get(endpoint)
         .then((response) => {
           let searchResults = response.data.hits;
           this.noResultsFound = searchResults.length === 0;
           this.max_pages = response.data.max_pages;
+
           // Add timestamp to force reactivity
           this.$emit("search-results", {
             results: searchResults,
@@ -125,11 +136,31 @@ export default {
           this.errorExists = true;
         });
     },
+    async getYearOptions() {
+      const endpoint = `${axios.defaults.baseURL}/api/v1/get_docs_per_year_count?search_query=${this.searchQuery}`;
+      await axios
+        .get(endpoint)
+        .then((response) => {
+          this.yearOptions = Object.entries(response.data.docs_per_year).map(
+            ([year, count]) => `${year} (${count})`
+          );
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    },
     clearSearch() {
       this.searchQuery = "";
     },
     handlePageSizeChange(pageSize) {
+      this.pageOffset = 0;
+      this.currentPage = 1;
       this.pageSize = pageSize;
+    },
+    handleYearChange(year) {
+      this.pageOffset = 0;
+      this.currentPage = 1;
+      this.selectedYear = year;
     },
     handlePageChange(page) {
       this.pageOffset = (page - 1) * this.pageSize;
