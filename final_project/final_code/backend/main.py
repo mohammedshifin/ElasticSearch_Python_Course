@@ -33,13 +33,20 @@ async def search(search_query: str, skip: int = 0, limit: int = 10) -> dict:
                 "from": skip,
                 "size": limit
             },
-            filter_path=["hits.hits._source,hits.hits._score"]
+            filter_path=["hits.hits._source,hits.hits._score,hits.total"]
         )
-        if not response:
-            return {"hits": []}
         
-        hits = response["hits"]["hits"]
-        return {"hits": hits}
+        if not response:
+            return {"hits": [], "max_pages": 0}
+        
+        total_hits = response["hits"]["total"]["value"]
+        max_pages = (total_hits + limit - 1) // limit
+        
+        return {
+            "hits": response["hits"]["hits"],
+            "max_pages": max_pages,
+        }
+    
     except ConnectionError:
         error_message = "Could not connect to Elasticsearch, make sure that the cluster is up and running."
         return HTMLResponse(content=error_message, status_code=500)
