@@ -12,6 +12,7 @@
         :highlightOnSelect="false"
         @update:modelValue="handleYearChange"
         size="large"
+        v-tooltip.bottom="'Filter by year'"
       />
     </div>
 
@@ -27,6 +28,7 @@
         :modelValue="selectedPageSize"
         @update:modelValue="handlePageSizeChange"
         size="large"
+        v-tooltip.bottom="'Change the number of items per page'"
       />
     </div>
 

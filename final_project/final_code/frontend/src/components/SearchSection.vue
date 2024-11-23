@@ -26,6 +26,7 @@
             v-if="searchQuery"
             class="fas fa-times clear-icon"
             @click="clearSearch"
+            v-tooltip.top="'Clear search'"
           ></i>
         </Transition>
       </span>

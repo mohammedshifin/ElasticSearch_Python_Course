@@ -7,7 +7,7 @@
             <button
               class="action-button close-button"
               @click.stop="$emit('close')"
-              title="Close"
+              v-tooltip.top="'Close'"
             >
               <i class="fas fa-times"></i>
             </button>
