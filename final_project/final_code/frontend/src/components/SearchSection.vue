@@ -8,6 +8,9 @@
       />
     </a>
 
+    <Transition name="fade">
+      <div v-if="errorExists" class="error-message">{{ errorMessage }}</div>
+    </Transition>
     <div class="search-container">
       <InputText
         class="input_text medium-text"
@@ -35,7 +38,7 @@
     </div>
 
     <Transition name="fade">
-      <PaginationBar v-show="searchQuery" @page-size-change="setPageSize" />
+      <PaginationBar v-show="canPerformSearch" @page-size-change="setPageSize" />
     </Transition>
   </div>
 </template>
@@ -56,20 +59,31 @@ export default {
       searchQuery: "",
       pageSize: 10,
       pageOffset: 0,
+      errorExists: false,
+      errorMessage: "",
     };
   },
   watch: {
     searchQuery() {
       this.pageOffset = 0;
-      this.handleSearch();
+      if (this.searchQuery !== "") {
+        this.handleSearch();
+      }
     },
     pageSize() {
       this.handleSearch();
     },
   },
+  computed: {
+    canPerformSearch() {
+      return this.searchQuery && !this.errorExists;
+    },
+  },
   methods: {
     async handleSearch() {
       if (this.searchQuery === "") {
+        this.errorMessage = "Please enter a search query.";
+        this.errorExists = true;
         return;
       }
 
@@ -83,9 +97,12 @@ export default {
             results: searchResults,
             timestamp: Date.now(),
           });
+          this.errorExists = false;
         })
         .catch((error) => {
           console.error(error);
+          this.errorMessage = error.response.data;
+          this.errorExists = true;
         });
     },
     clearSearch() {
@@ -107,12 +124,12 @@ export default {
   display: block;
   width: 100%;
   max-width: 10rem;
+  margin-bottom: 1rem;
 }
 
 .search-container {
   position: relative;
   display: inline-block;
-  margin-top: 3rem;
 }
 
 .icon-container {
@@ -173,5 +190,12 @@ export default {
 .fade-leave-from {
   opacity: 1;
   transform: translateY(0);
+}
+
+.error-message {
+  margin-bottom: 0.3rem;
+  color: rgb(255, 58, 58);
+  width: 60rem;
+  padding-left: 0.75rem;
 }
 </style>
