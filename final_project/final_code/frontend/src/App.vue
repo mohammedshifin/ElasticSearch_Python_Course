@@ -18,7 +18,9 @@ export default {
 /* Customize PrimeVue's default color */
 :root {
   --primary-color: #ea5e13;
-  --p-select-focus-border-color: var(--primary-color) !important;
+  --p-primary-color: var(--primary-color) !important;
+  --p-select-placeholder-color: #fff !important;
+  --p-select-dropdown-color: #fff !important;
 }
 
 body {
