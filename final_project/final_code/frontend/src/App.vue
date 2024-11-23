@@ -44,4 +44,8 @@ body {
   font-size: 1rem;
   color: white;
 }
+
+.medium-text {
+  font-size: 1.2rem !important;
+}
 </style>
