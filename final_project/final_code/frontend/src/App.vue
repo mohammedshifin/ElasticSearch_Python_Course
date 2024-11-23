@@ -21,6 +21,7 @@ export default {
   --p-primary-color: var(--primary-color) !important;
   --p-select-placeholder-color: #fff !important;
   --p-select-dropdown-color: #fff !important;
+  --p-select-clear-icon-color: #fff !important;
 }
 
 body {
