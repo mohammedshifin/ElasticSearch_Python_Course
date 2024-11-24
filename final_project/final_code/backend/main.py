@@ -17,7 +17,6 @@ app.add_middleware(
 
 @app.get("/api/v1/search/")
 async def search(search_query: str, skip: int = 0, limit: int = 10, year: str | None = None) -> dict:
-    print(f"Year {year}")
     try:
         es = get_es_client(max_retries=1, sleep_time=0)
         query = {
@@ -67,8 +66,8 @@ async def search(search_query: str, skip: int = 0, limit: int = 10, year: str | 
             "hits": response["hits"].get("hits", []),
             "max_pages": max_pages,
         }
-    except ConnectionError:
-        return handle_connection_error()
+    except Exception as e:
+        return handle_error(e)
     
     
 def get_total_hits(response: dict) -> int:
@@ -115,8 +114,8 @@ async def get_docs_per_year_count(search_query: str) -> dict:
             ]
         )
         return {"docs_per_year": extract_docs_per_year(response)}
-    except ConnectionError:
-        return handle_connection_error()
+    except Exception as e:
+        return handle_error(e)
 
 
 def extract_docs_per_year(response: dict) -> dict:
@@ -126,6 +125,6 @@ def extract_docs_per_year(response: dict) -> dict:
     return {bucket["key_as_string"]: bucket["doc_count"] for bucket in buckets}
 
 
-def handle_connection_error() -> HTMLResponse:
-    error_message = "Could not connect to Elasticsearch, make sure that the cluster is up and running."
+def handle_error(e: Exception) -> HTMLResponse:
+    error_message = f"An error occurred: {str(e)}"
     return HTMLResponse(content=error_message, status_code=500)
