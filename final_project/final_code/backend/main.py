@@ -1,9 +1,9 @@
-from config import INDEX_NAME
-from utils import get_es_client
-
 from fastapi import FastAPI
 from fastapi.responses import HTMLResponse
 from fastapi.middleware.cors import CORSMiddleware
+
+from utils import get_es_client
+from config import INDEX_NAME_DEFAULT, INDEX_NAME_N_GRAM
 
 
 app = FastAPI()
@@ -46,7 +46,7 @@ async def search(search_query: str, skip: int = 0, limit: int = 10, year: str | 
             ]
             
         response = es.search(
-            index=INDEX_NAME,
+            index=INDEX_NAME_N_GRAM,
             body={
                 "query": query,
                 "from": skip,
@@ -96,7 +96,7 @@ async def get_docs_per_year_count(search_query: str) -> dict:
         }
             
         response = es.search(
-            index=INDEX_NAME,
+            index=INDEX_NAME_N_GRAM,
             body={
                 "query": query,
                 "aggs": {
