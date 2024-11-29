@@ -41,6 +41,7 @@
         @page-size-change="handlePageSizeChange"
         @year-change="handleYearChange"
         @go-to-page="handlePageChange"
+        @search-method-change="handleSearchMethodChange"
       />
     </Transition>
 
@@ -75,6 +76,7 @@ export default {
       noResultsFound: false,
       yearOptions: {},
       selectedYear: null,
+      selectedSearchMethod: null,
     };
   },
   watch: {
@@ -94,6 +96,9 @@ export default {
     selectedYear() {
       this.handleSearch();
     },
+    selectedSearchMethod() {
+      this.handleSearch();
+    },
   },
   computed: {
     canPerformSearch() {
@@ -109,7 +114,14 @@ export default {
       }
 
       const year = this.selectedYear ? this.selectedYear.slice(0, 4) : ''
-      const endpoint = `${axios.defaults.baseURL}/api/v1/search?search_query=${this.searchQuery}&skip=${this.pageOffset}&limit=${this.pageSize}&year=${year}`;
+      let endpoint = ""
+
+      if (this.selectedSearchMethod === "Semantic search") {
+        endpoint = `${axios.defaults.baseURL}/api/v1/semantic_search?search_query=${this.searchQuery}&skip=${this.pageOffset}&limit=${this.pageSize}&year=${year}`;
+      } else {
+        endpoint = `${axios.defaults.baseURL}/api/v1/regular_search?search_query=${this.searchQuery}&skip=${this.pageOffset}&limit=${this.pageSize}&year=${year}`;
+      }
+      
       await axios
         .get(endpoint)
         .then((response) => {
@@ -159,6 +171,9 @@ export default {
     handlePageChange(page) {
       this.pageOffset = (page - 1) * this.pageSize;
       this.currentPage = page;
+    },
+    handleSearchMethodChange(searchMethod) {
+      this.selectedSearchMethod = searchMethod;
     },
   },
 };
