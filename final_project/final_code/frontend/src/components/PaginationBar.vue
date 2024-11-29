@@ -1,75 +1,94 @@
 <template>
   <div class="pagination-bar-container">
-    <div class="year-filter">
-      <span class="medium-text">Year</span>
-      <Select
-        checkmark
-        showClear=""
-        class="custom-selector medium-text"
-        v-model="selectedYear"
-        :options="yearOptions"
-        placeholder="All years"
-        :highlightOnSelect="false"
-        @update:modelValue="handleYearChange"
-        size="large"
-        v-tooltip.bottom="'Filter by year'"
-      />
+    <div class="row">
+      <div class="year-filter">
+        <span class="medium-text">Year</span>
+        <Select
+          checkmark
+          showClear=""
+          class="custom-selector medium-text"
+          v-model="selectedYear"
+          :options="yearOptions"
+          placeholder="All years"
+          :highlightOnSelect="false"
+          @update:modelValue="handleYearChange"
+          size="large"
+          v-tooltip.bottom="'Filter by year'"
+        />
+      </div>
+  
+      <div class="page-size">
+        <span class="medium-text">Items per page</span>
+        <Select
+          checkmark
+          class="custom-selector medium-text"
+          v-model="selectedPageSize"
+          :options="pageSizes"
+          :placeholder="selectedPageSize"
+          :highlightOnSelect="false"
+          :modelValue="selectedPageSize"
+          @update:modelValue="handlePageSizeChange"
+          size="large"
+          v-tooltip.bottom="'Change the number of items per page'"
+        />
+      </div>
+  
+      <div class="pagination-buttons">
+        <button
+          :disabled="currentPage === 1"
+          @click="goToFirstPage"
+          class="pagination-btn medium-text"
+          v-tooltip.bottom="'Go to the first page'"
+        >
+          <i class="fas fa-angle-double-left"></i> First
+        </button>
+        <button
+          :disabled="currentPage === 1"
+          @click="goToPreviousPage"
+          class="pagination-btn medium-text"
+          v-tooltip.bottom="'Go to the previous page'"
+        >
+          <i class="fas fa-chevron-left"></i> Previous
+        </button>
+  
+        <span class="current-page medium-text">
+          {{ currentPage }} / {{ maxPages }}
+        </span>
+  
+        <button
+          :disabled="currentPage === maxPages"
+          @click="goToNextPage"
+          v-tooltip.bottom="'Go to the next page'"
+          class="pagination-btn medium-text"
+        >
+          Next <i class="fas fa-chevron-right"></i>
+        </button>
+        <button
+          :disabled="currentPage === maxPages"
+          @click="goToLastPage"
+          v-tooltip.bottom="'Go to the last page'"
+          class="pagination-btn medium-text"
+        >
+          Last <i class="fas fa-angle-double-right"></i>
+        </button>
+      </div>
     </div>
-
-    <div class="page-size">
-      <span class="medium-text">Items per page</span>
-      <Select
-        checkmark
-        class="custom-selector medium-text"
-        v-model="selectedPageSize"
-        :options="pageSizes"
-        :placeholder="selectedPageSize"
-        :highlightOnSelect="false"
-        :modelValue="selectedPageSize"
-        @update:modelValue="handlePageSizeChange"
-        size="large"
-        v-tooltip.bottom="'Change the number of items per page'"
-      />
-    </div>
-
-    <div class="pagination-buttons">
-      <button
-        :disabled="currentPage === 1"
-        @click="goToFirstPage"
-        class="pagination-btn medium-text"
-        v-tooltip.bottom="'Go to the first page'"
-      >
-        <i class="fas fa-angle-double-left"></i> First
-      </button>
-      <button
-        :disabled="currentPage === 1"
-        @click="goToPreviousPage"
-        class="pagination-btn medium-text"
-        v-tooltip.bottom="'Go to the previous page'"
-      >
-        <i class="fas fa-chevron-left"></i> Previous
-      </button>
-
-      <span class="current-page medium-text">
-        {{ currentPage }} / {{ maxPages }}
-      </span>
-
-      <button
-        :disabled="currentPage === maxPages"
-        @click="goToNextPage"
-        v-tooltip.bottom="'Go to the next page'"
-        class="pagination-btn medium-text"
-      >
-        Next <i class="fas fa-chevron-right"></i>
-      </button>
-      <button
-        :disabled="currentPage === maxPages"
-        @click="goToLastPage"
-        v-tooltip.bottom="'Go to the last page'"
-        class="pagination-btn medium-text"
-      >
-        Last <i class="fas fa-angle-double-right"></i>
-      </button>
+    <div class="row">
+      <div class="search-method">
+        <span class="medium-text">Search method</span>
+        <Select
+          checkmark
+          showClear=""
+          class="custom-selector medium-text"
+          v-model="selectedSearchMethod"
+          :options="searchMethodOptions"
+          placeholder="Select search method"
+          :highlightOnSelect="false"
+          @update:modelValue="handleSearchMethodChange"
+          size="large"
+          v-tooltip.bottom="'Change the search method'"
+        />
+      </div>
     </div>
   </div>
 </template>
@@ -101,6 +120,8 @@ export default {
       selectedPageSize: 10,
       pageSizes: [10, 20, 50],
       selectedYear: null,
+      selectedSearchMethod: null,
+      searchMethodOptions: ["Regular search", "Semantic search"],
     };
   },
   methods: {
@@ -126,12 +147,15 @@ export default {
     goToLastPage() {
       this.$emit("go-to-page", this.maxPages);
     },
+    handleSearchMethodChange() {
+      this.$emit("search-method-change", this.selectedSearchMethod);
+    },
   },
 };
 </script>
 
 <style scoped>
-.pagination-bar-container {
+.pagination-bar-container .row {
   display: flex;
   justify-content: space-between;
   border: 1px solid rgba(234, 94, 19, 0.2);
