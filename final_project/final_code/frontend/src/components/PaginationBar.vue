@@ -88,20 +88,22 @@
           v-tooltip.bottom="'Change the search method'"
         />
       </div>
-      <div class="tokenizer-selection" v-if="selectedSearchMethod === 'Regular search'">
-        <span class="medium-text">Tokenizer</span>
-        <Select
-          checkmark
-          class="custom-selector medium-text"
-          v-model="selectedTokenizer"
-          :options="tokenizerOptions"
-          placeholder="Select a tokenizer"
-          :highlightOnSelect="false"
-          @update:modelValue="handleTokenizerChange"
-          size="large"
-          v-tooltip.bottom="'Change the tokenizer'"
-        />
-      </div>
+      <Transition name="fade">
+        <div class="tokenizer-selection" v-if="selectedSearchMethod === 'Regular search'">
+          <span class="medium-text">Tokenizer</span>
+          <Select
+            checkmark
+            class="custom-selector medium-text"
+            v-model="selectedTokenizer"
+            :options="tokenizerOptions"
+            placeholder="Select a tokenizer"
+            :highlightOnSelect="false"
+            @update:modelValue="handleTokenizerChange"
+            size="large"
+            v-tooltip.bottom="'Change the tokenizer'"
+          />
+        </div>
+      </Transition>
     </div>
   </div>
 </template>
@@ -227,5 +229,15 @@ export default {
 .row-search-tokenizer {
   display: flex;
   justify-content: start !important;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
 }
 </style>
