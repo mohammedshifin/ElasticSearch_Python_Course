@@ -73,12 +73,11 @@
         </button>
       </div>
     </div>
-    <div class="row">
+    <div class="row row-search-tokenizer">
       <div class="search-method">
         <span class="medium-text">Search method</span>
         <Select
           checkmark
-          showClear=""
           class="custom-selector medium-text"
           v-model="selectedSearchMethod"
           :options="searchMethodOptions"
@@ -87,6 +86,20 @@
           @update:modelValue="handleSearchMethodChange"
           size="large"
           v-tooltip.bottom="'Change the search method'"
+        />
+      </div>
+      <div class="tokenizer-selection" v-if="selectedSearchMethod === 'Regular search'">
+        <span class="medium-text">Tokenizer</span>
+        <Select
+          checkmark
+          class="custom-selector medium-text"
+          v-model="selectedTokenizer"
+          :options="tokenizerOptions"
+          placeholder="Select a tokenizer"
+          :highlightOnSelect="false"
+          @update:modelValue="handleTokenizerChange"
+          size="large"
+          v-tooltip.bottom="'Change the tokenizer'"
         />
       </div>
     </div>
@@ -120,8 +133,10 @@ export default {
       selectedPageSize: 10,
       pageSizes: [10, 20, 50],
       selectedYear: null,
-      selectedSearchMethod: null,
+      selectedSearchMethod: "Regular search",
       searchMethodOptions: ["Regular search", "Semantic search"],
+      selectedTokenizer: "Standard",
+      tokenizerOptions: ["Standard", "N-Gram"]
     };
   },
   methods: {
@@ -150,7 +165,10 @@ export default {
     handleSearchMethodChange() {
       this.$emit("search-method-change", this.selectedSearchMethod);
     },
-  },
+    handleTokenizerChange() {
+      this.$emit("tokenizer-change", this.selectedTokenizer);
+    }
+  }
 };
 </script>
 
@@ -200,5 +218,14 @@ export default {
 
 .current-page {
   margin: 0 1rem;
+}
+
+.tokenizer-selection {
+  margin-left: 1rem;
+}
+
+.row-search-tokenizer {
+  display: flex;
+  justify-content: start !important;
 }
 </style>

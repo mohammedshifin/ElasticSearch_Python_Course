@@ -34,6 +34,7 @@
 
     <Transition name="fade">
       <PaginationBar
+        ref="paginationBar"
         v-show="canPerformSearch"
         :currentPage="currentPage"
         :maxPages="max_pages"
@@ -42,6 +43,7 @@
         @year-change="handleYearChange"
         @go-to-page="handlePageChange"
         @search-method-change="handleSearchMethodChange"
+        @tokenizer-change="handleTokenizerChange"
       />
     </Transition>
 
@@ -76,7 +78,8 @@ export default {
       noResultsFound: false,
       yearOptions: {},
       selectedYear: null,
-      selectedSearchMethod: null,
+      selectedSearchMethod: "Regular search",
+      selectedTokenizer: "Standard"
     };
   },
   watch: {
@@ -99,6 +102,9 @@ export default {
     selectedSearchMethod() {
       this.handleSearch();
     },
+    selectedTokenizer() {
+      this.handleSearch();
+    }
   },
   computed: {
     canPerformSearch() {
@@ -119,7 +125,7 @@ export default {
       if (this.selectedSearchMethod === "Semantic search") {
         endpoint = `${axios.defaults.baseURL}/api/v1/semantic_search?search_query=${this.searchQuery}&skip=${this.pageOffset}&limit=${this.pageSize}&year=${year}`;
       } else {
-        endpoint = `${axios.defaults.baseURL}/api/v1/regular_search?search_query=${this.searchQuery}&skip=${this.pageOffset}&limit=${this.pageSize}&year=${year}`;
+        endpoint = `${axios.defaults.baseURL}/api/v1/regular_search?search_query=${this.searchQuery}&skip=${this.pageOffset}&limit=${this.pageSize}&year=${year}&tokenizer=${this.selectedTokenizer}`;
       }
       
       await axios
@@ -143,7 +149,7 @@ export default {
         });
     },
     async getYearOptions() {
-      const endpoint = `${axios.defaults.baseURL}/api/v1/get_docs_per_year_count?search_query=${this.searchQuery}`;
+      const endpoint = `${axios.defaults.baseURL}/api/v1/get_docs_per_year_count?search_query=${this.searchQuery}&tokenizer=${this.selectedTokenizer}`;
       await axios
         .get(endpoint)
         .then((response) => {
@@ -175,6 +181,9 @@ export default {
     handleSearchMethodChange(searchMethod) {
       this.selectedSearchMethod = searchMethod;
     },
+    handleTokenizerChange(tokenizer) {
+      this.selectedTokenizer = tokenizer;
+    }
   },
 };
 </script>

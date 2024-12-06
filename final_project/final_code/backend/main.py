@@ -24,7 +24,13 @@ model = SentenceTransformer('all-MiniLM-L6-v2').to(device)
 
 
 @app.get("/api/v1/regular_search/")
-async def regular_search(search_query: str, skip: int = 0, limit: int = 10, year: str | None = None) -> dict:
+async def regular_search(
+    search_query: str, 
+    skip: int = 0, 
+    limit: int = 10,
+    year: str | None = None,
+    tokenizer: str = "Standard"
+) -> dict:
     try:
         es = get_es_client(max_retries=1, sleep_time=0)
         query = {
@@ -53,8 +59,9 @@ async def regular_search(search_query: str, skip: int = 0, limit: int = 10, year
                 }
             ]
             
+        index_name = INDEX_NAME_DEFAULT if tokenizer == "Standard" else INDEX_NAME_N_GRAM
         response = es.search(
-            index=INDEX_NAME_N_GRAM,
+            index=index_name,
             body={
                 "query": query,
                 "from": skip,
@@ -79,7 +86,12 @@ async def regular_search(search_query: str, skip: int = 0, limit: int = 10, year
     
 
 @app.get("/api/v1/semantic_search/")
-async def semantic_search(search_query: str, skip: int = 0, limit: int = 10, year: str | None = None) -> dict:
+async def semantic_search(
+    search_query: str,
+    skip: int = 0,
+    limit: int = 10,
+    year: str | None = None
+) -> dict:
     try:
         es = get_es_client(max_retries=1, sleep_time=0)
         embedded_query = model.encode(search_query)
@@ -146,7 +158,7 @@ def calculate_max_pages(total_hits: int, limit: int) -> int:
     
     
 @app.get("/api/v1/get_docs_per_year_count/")
-async def get_docs_per_year_count(search_query: str) -> dict:
+async def get_docs_per_year_count(search_query: str, tokenizer: str = "Standard") -> dict:
     try:
         es = get_es_client(max_retries=1, sleep_time=0)
         query = {
@@ -162,8 +174,9 @@ async def get_docs_per_year_count(search_query: str) -> dict:
             }
         }
             
+        index_name = INDEX_NAME_DEFAULT if tokenizer == "Standard" else INDEX_NAME_N_GRAM
         response = es.search(
-            index=INDEX_NAME_N_GRAM,
+            index=index_name,
             body={
                 "query": query,
                 "aggs": {
