@@ -60,7 +60,7 @@ export default {
   left: 0;
   width: 100%;
   height: 100vh;
-  background-color: #080e1a; /* Dark blue background similar to Quasar's */
+  background-color: #080e1a;
   overflow: hidden;
   z-index: -1;
 }
