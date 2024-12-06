@@ -169,6 +169,7 @@ export default {
     },
     handleTokenizerChange() {
       this.$emit("tokenizer-change", this.selectedTokenizer);
+      this.selectedYear = null;
     }
   }
 };

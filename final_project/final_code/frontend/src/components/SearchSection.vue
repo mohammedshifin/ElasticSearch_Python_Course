@@ -104,6 +104,7 @@ export default {
     },
     selectedTokenizer() {
       this.handleSearch();
+      this.getYearOptions();
     }
   },
   computed: {
