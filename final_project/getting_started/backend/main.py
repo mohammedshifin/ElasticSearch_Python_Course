@@ -1,6 +1,6 @@
 import torch
 
-from config import INDEX_NAME_DEFAULT, INDEX_NAME_N_GRAM, INDEX_NAME_EMBEDDING
+from config import INDEX_NAME_DEFAULT, INDEX_NAME_N_GRAM, INDEX_NAME_EMBEDDING, INDEX_NAME_RAW
 from utils import get_es_client
 
 from fastapi import FastAPI
@@ -54,7 +54,7 @@ async def regular_search(search_query: str, skip: int = 0, limit: int = 10, year
         ]
     
     response = es.search(
-        index=INDEX_NAME_N_GRAM,
+        index=INDEX_NAME_RAW,
         body={
             "query": query,
             "from": skip,
@@ -158,7 +158,7 @@ async def get_docs_per_year_count(search_query: str) -> dict:
         }
         
         response = es.search(
-            index=INDEX_NAME_N_GRAM,
+            index=INDEX_NAME_RAW,
             body={
                 "query": query,
                 "aggs": {
