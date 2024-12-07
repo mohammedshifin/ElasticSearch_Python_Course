@@ -1,12 +1,12 @@
 <template>
   <div class="container">
-    <router-link to="/" class="image-container">
+    <a href="/" class="image-container">
       <img
         src="../assets/galaxy_logo_white.svg"
         class="image-logo"
         alt="My Universe Hub logo"
       />
-    </router-link>
+    </a>
 
     <Transition name="fade">
       <div v-if="errorExists" class="error-message">{{ errorMessage }}</div>
@@ -270,6 +270,12 @@ export default {
 
 .no-results-message i {
   margin-right: 0.5rem;
+}
+
+@media screen and (max-width: 1920px) {
+  .image-container {
+    width: 10rem;
+  }
 }
 
 @media screen and (max-width: 1440px) {
