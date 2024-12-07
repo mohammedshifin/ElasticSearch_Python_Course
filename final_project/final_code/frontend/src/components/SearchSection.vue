@@ -1,12 +1,12 @@
 <template>
   <div class="container">
-    <a href="/">
+    <router-link to="/" class="image-container">
       <img
         src="../assets/galaxy_logo_white.svg"
-        class="image_logo"
+        class="image-logo"
         alt="My Universe Hub logo"
       />
-    </a>
+    </router-link>
 
     <Transition name="fade">
       <div v-if="errorExists" class="error-message">{{ errorMessage }}</div>
@@ -194,10 +194,14 @@ export default {
   margin-top: 10rem;
 }
 
-.image_logo {
+.image-container {
+  display: block;
+  width: 15rem;
+}
+
+.image-logo {
   display: block;
   width: 100%;
-  max-width: 10rem;
   margin-bottom: 5rem;
 }
 
@@ -266,5 +270,35 @@ export default {
 
 .no-results-message i {
   margin-right: 0.5rem;
+}
+
+@media screen and (max-width: 1440px) {
+  .image-container {
+    width: 10rem;
+  }
+}
+
+@media screen and (max-width: 992px) {
+  .image-container {
+    width: 7rem;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .image-container {
+    width: 5rem;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .image-container {
+    width: 4rem;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .image-container {
+    width: 3rem;
+  }
 }
 </style>
