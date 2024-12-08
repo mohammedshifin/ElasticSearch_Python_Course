@@ -62,6 +62,20 @@ body {
   font-size: 1.5rem !important;
 }
 
+.align-vertical-center {
+  display: flex;
+  align-items: center;
+}
+
+.align-space-between {
+  display: flex;
+  justify-content: space-between;
+}
+
+.align-horizontal {
+  display: flex;
+}
+
 @media screen and (max-width: 1920px) {
   .container {
     margin-left: 12rem;
