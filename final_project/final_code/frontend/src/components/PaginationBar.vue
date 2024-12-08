@@ -264,11 +264,25 @@ export default {
     height: 3rem;
     padding: 0.5rem;
   }
+
+  .pagination-buttons {
+    margin-top: 3rem;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .pagination-buttons {
+    margin-top: 2rem;
+  }
 }
 
 @media screen and (max-width: 576px) {
   .pagination-btn .button-text {
     display: none;
+  }
+
+  .pagination-buttons {
+    margin-top: 1rem;
   }
 }
 </style>
