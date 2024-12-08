@@ -199,12 +199,12 @@ export default {
 .image-container {
   display: block;
   width: 15rem;
+  margin-bottom: 10rem;
 }
 
 .image-logo {
   display: block;
   width: 100%;
-  margin-bottom: 10rem;
 }
 
 .search-container {
@@ -282,9 +282,6 @@ export default {
   
   .image-container {
     width: 10rem;
-  }
-
-  .image-logo {
     margin-bottom: 6rem;
   }
 
@@ -308,9 +305,6 @@ export default {
   
   .image-container {
     width: 10rem;
-  }
-
-  .image-logo {
     margin-bottom: 5rem;
   }
 }
@@ -344,9 +338,6 @@ export default {
   
   .image-container {
     width: 5rem;
-  }
-
-  .image-logo {
     margin-bottom: 4rem;
   }
 }
@@ -364,9 +355,6 @@ export default {
 
   .image-container {
     width: 3rem;
-  }
-
-  .image-logo {
     margin-bottom: 3rem;
   }
 
