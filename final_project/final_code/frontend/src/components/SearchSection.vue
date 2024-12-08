@@ -14,7 +14,7 @@
 
     <div class="search-container">
       <InputText
-        class="input_text medium-text"
+        class="input-text medium-text"
         type="text"
         v-model="searchQuery"
         placeholder="Andromeda galaxy"
@@ -230,9 +230,9 @@ export default {
   color: #666;
 }
 
-.input_text {
+.input-text {
   width: 100%;
-  height: 3rem;
+  height: 6rem;
   border-radius: 0rem;
 }
 
@@ -283,6 +283,10 @@ export default {
   .image-logo {
     margin-bottom: 6rem;
   }
+
+  .input-text {
+    height: 4rem;
+  }
 }
 
 @media screen and (max-width: 1440px) {
@@ -306,6 +310,10 @@ export default {
   
   .image-container {
     width: 7rem;
+  }
+  
+  .input-text {
+    height: 3rem;
   }
 }
 
@@ -340,6 +348,10 @@ export default {
 
   .image-logo {
     margin-bottom: 3rem;
+  }
+
+  .input-text {
+    height: 3rem;
   }
 }
 </style>
