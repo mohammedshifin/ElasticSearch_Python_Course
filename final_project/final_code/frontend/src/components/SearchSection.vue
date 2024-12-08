@@ -191,7 +191,7 @@ export default {
 
 <style scoped>
 .container {
-  margin-top: 10rem;
+  margin-top: 12rem;
 }
 
 .image-container {
@@ -206,8 +206,7 @@ export default {
 }
 
 .search-container {
-  position: relative;
-  display: inline-block;
+  width: 100%;
 }
 
 .icon-container {
@@ -232,7 +231,7 @@ export default {
 }
 
 .input_text {
-  width: 60rem;
+  width: 100%;
   height: 3rem;
   border-radius: 0rem;
 }
@@ -273,24 +272,40 @@ export default {
 }
 
 @media screen and (max-width: 1920px) {
+  .container {
+    margin-top: 10rem;
+  }
+  
   .image-container {
     width: 10rem;
   }
 }
 
 @media screen and (max-width: 1440px) {
+  .container {
+    margin-top: 9rem;
+  }
+  
   .image-container {
     width: 10rem;
   }
 }
 
 @media screen and (max-width: 992px) {
+  .container {
+    margin-top: 8rem;
+  }
+  
   .image-container {
     width: 7rem;
   }
 }
 
 @media screen and (max-width: 768px) {
+  .container {
+    margin-top: 6rem;
+  }
+  
   .image-container {
     width: 5rem;
   }
@@ -303,6 +318,10 @@ export default {
 }
 
 @media screen and (max-width: 480px) {
+  .container {
+    margin-top: 5rem;
+  }
+
   .image-container {
     width: 3rem;
   }
