@@ -23,6 +23,7 @@
       <span class="icon-container">
         <Transition name="fade">
           <i
+            v-if="searchQuery"
             class="fas fa-times clear-icon"
             @click="clearSearch"
             v-tooltip.top="'Clear search'"
@@ -224,7 +225,7 @@ export default {
   cursor: pointer;
   color: var(--primary-color);
   transition: color 0.3s ease;
-  font-size: 1.5rem;
+  font-size: 3rem;
 }
 
 .clear-icon:hover {
@@ -292,6 +293,10 @@ export default {
   .icon-container {
     right: 1rem;
   }
+
+  .clear-icon {
+    font-size: 2rem;
+  }
 }
 
 @media screen and (max-width: 1440px) {
@@ -323,6 +328,10 @@ export default {
 
   .icon-container {
     right: 0.625rem;
+  }
+
+  .clear-icon {
+    font-size: 1.5rem;
   }
 }
 
