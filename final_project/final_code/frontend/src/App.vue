@@ -93,15 +93,15 @@ body {
 
 @media screen and (max-width: 1440px) {
   .container {
-    margin-left: 10rem;
-    margin-right: 10rem;
+    margin-left: 5rem;
+    margin-right: 5rem;
   }
 }
 
 @media screen and (max-width: 992px) {
   .container {
-    margin-left: 5rem;
-    margin-right: 5rem;
+    margin-left: 3rem;
+    margin-right: 3rem;
   }
 }
 
