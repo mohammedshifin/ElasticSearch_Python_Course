@@ -58,6 +58,10 @@ body {
   font-size: 1.75rem !important;
 }
 
+.small-text {
+  font-size: 1.5rem !important;
+}
+
 @media screen and (max-width: 1920px) {
   .container {
     margin-left: 12rem;
@@ -66,6 +70,10 @@ body {
 
   .medium-text {
     font-size: 1.2rem !important;
+  }
+
+  .small-text {
+    font-size: 1rem !important;
   }
 }
 
@@ -91,6 +99,10 @@ body {
 
   .medium-text {
     font-size: 0.8rem !important;
+  }
+
+  .small-text {
+    font-size: 0.6rem !important;
   }
 }
 

@@ -9,7 +9,7 @@
     </a>
 
     <Transition name="fade">
-      <div v-if="errorExists" class="error-message">{{ errorMessage }}</div>
+      <div v-if="errorExists" class="error-message small-text">{{ errorMessage }}</div>
     </Transition>
 
     <div class="search-container">
@@ -260,8 +260,8 @@ export default {
 .error-message {
   margin-bottom: 0.3rem;
   color: rgb(255, 58, 58);
-  width: 60rem;
   padding-left: 0.75rem;
+  align-self: flex-start;
 }
 
 .no-results-message {
