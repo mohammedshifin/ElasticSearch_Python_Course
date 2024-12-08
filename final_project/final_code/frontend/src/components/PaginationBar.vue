@@ -6,7 +6,7 @@
         <Select
           checkmark
           showClear=""
-          class="custom-selector medium-text"
+          class="custom-selector medium-text align-vertical-center"
           v-model="selectedYear"
           :options="yearOptions"
           placeholder="All years"
@@ -16,69 +16,12 @@
           v-tooltip.bottom="'Filter by year'"
         />
       </div>
-  
-      <div class="page-size">
-        <span class="medium-text">Items per page</span>
-        <Select
-          checkmark
-          class="custom-selector medium-text"
-          v-model="selectedPageSize"
-          :options="pageSizes"
-          :placeholder="selectedPageSize"
-          :highlightOnSelect="false"
-          :modelValue="selectedPageSize"
-          @update:modelValue="handlePageSizeChange"
-          size="large"
-          v-tooltip.bottom="'Change the number of items per page'"
-        />
-      </div>
-  
-      <div class="pagination-buttons">
-        <button
-          :disabled="currentPage === 1"
-          @click="goToFirstPage"
-          class="pagination-btn medium-text"
-          v-tooltip.bottom="'Go to the first page'"
-        >
-          <i class="fas fa-angle-double-left"></i> First
-        </button>
-        <button
-          :disabled="currentPage === 1"
-          @click="goToPreviousPage"
-          class="pagination-btn medium-text"
-          v-tooltip.bottom="'Go to the previous page'"
-        >
-          <i class="fas fa-chevron-left"></i> Previous
-        </button>
-  
-        <span class="current-page medium-text">
-          {{ currentPage }} / {{ maxPages }}
-        </span>
-  
-        <button
-          :disabled="currentPage === maxPages"
-          @click="goToNextPage"
-          v-tooltip.bottom="'Go to the next page'"
-          class="pagination-btn medium-text"
-        >
-          Next <i class="fas fa-chevron-right"></i>
-        </button>
-        <button
-          :disabled="currentPage === maxPages"
-          @click="goToLastPage"
-          v-tooltip.bottom="'Go to the last page'"
-          class="pagination-btn medium-text"
-        >
-          Last <i class="fas fa-angle-double-right"></i>
-        </button>
-      </div>
-    </div>
-    <div class="row row-search-tokenizer">
+
       <div class="search-method">
         <span class="medium-text">Search method</span>
         <Select
           checkmark
-          class="custom-selector medium-text"
+          class="custom-selector medium-text align-vertical-center"
           v-model="selectedSearchMethod"
           :options="searchMethodOptions"
           placeholder="Select search method"
@@ -88,12 +31,16 @@
           v-tooltip.bottom="'Change the search method'"
         />
       </div>
+
       <Transition name="fade">
-        <div class="tokenizer-selection" v-if="selectedSearchMethod === 'Regular search'">
+        <div
+          class="tokenizer-option"
+          v-if="selectedSearchMethod === 'Regular search'"
+        >
           <span class="medium-text">Tokenizer</span>
           <Select
             checkmark
-            class="custom-selector medium-text"
+            class="custom-selector medium-text align-vertical-center"
             v-model="selectedTokenizer"
             :options="tokenizerOptions"
             placeholder="Select a tokenizer"
@@ -104,7 +51,63 @@
           />
         </div>
       </Transition>
+
+      <div class="page-size">
+        <span class="medium-text">Items per page</span>
+        <Select
+          checkmark
+          class="custom-selector medium-text align-vertical-center"
+          v-model="selectedPageSize"
+          :options="pageSizes"
+          :placeholder="selectedPageSize"
+          :highlightOnSelect="false"
+          :modelValue="selectedPageSize"
+          @update:modelValue="handlePageSizeChange"
+          size="large"
+          v-tooltip.bottom="'Change the number of items per page'"
+        />
+      </div>
     </div>
+  </div>
+
+  <div class="row pagination-buttons">
+    <button
+      :disabled="currentPage === 1"
+      @click="goToFirstPage"
+      class="pagination-btn medium-text"
+      v-tooltip.bottom="'Go to the first page'"
+    >
+      <i class="fas fa-angle-double-left"></i> <span class="button-text">First</span>
+    </button>
+    <button
+      :disabled="currentPage === 1"
+      @click="goToPreviousPage"
+      class="pagination-btn medium-text"
+      v-tooltip.bottom="'Go to the previous page'"
+    >
+      <i class="fas fa-chevron-left"></i> <span class="button-text">Previous</span>
+    </button>
+
+    <span class="current-page medium-text">
+      {{ currentPage }} / {{ maxPages }}
+    </span>
+
+    <button
+      :disabled="currentPage === maxPages"
+      @click="goToNextPage"
+      v-tooltip.bottom="'Go to the next page'"
+      class="pagination-btn medium-text"
+    >
+      <i class="fas fa-chevron-right"></i> <span class="button-text">Next</span>
+    </button>
+    <button
+      :disabled="currentPage === maxPages"
+      @click="goToLastPage"
+      v-tooltip.bottom="'Go to the last page'"
+      class="pagination-btn medium-text"
+    >
+      <i class="fas fa-angle-double-right"></i> <span class="button-text">Last</span>
+    </button>
   </div>
 </template>
 
@@ -138,7 +141,7 @@ export default {
       selectedSearchMethod: "Regular search",
       searchMethodOptions: ["Regular search", "Semantic search"],
       selectedTokenizer: "Standard",
-      tokenizerOptions: ["Standard", "N-Gram"]
+      tokenizerOptions: ["Standard", "N-Gram"],
     };
   },
   methods: {
@@ -170,41 +173,49 @@ export default {
     handleTokenizerChange() {
       this.$emit("tokenizer-change", this.selectedTokenizer);
       this.selectedYear = null;
-    }
-  }
+    },
+  },
 };
 </script>
 
 <style scoped>
-.pagination-bar-container .row {
-  display: flex;
-  justify-content: space-between;
+.pagination-bar-container {
+  width: 100%;
   border: 1px solid rgba(234, 94, 19, 0.2);
   background: rgba(255, 255, 255, 0.05);
-  padding: 0.5rem;
-  width: 60rem;
-  margin-top: 1rem;
+  padding: 1.5rem;
+  margin-top: 2rem;
+}
+
+.pagination-bar-container .row {
+  display: flex;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+  justify-content: space-between;
 }
 
 .custom-selector {
-  margin-left: 1rem;
   border-radius: 0rem;
-  height: 3rem;
+  height: 4rem;
   background: transparent;
   color: white !important;
+  width: 100%;
 }
 
 .pagination-buttons {
   display: flex;
   align-items: center;
+  justify-content: end;
+  width: 100%;
   gap: 0.5rem;
+  margin-top: 5rem;
 }
 
 .pagination-btn {
   background: transparent;
-  height: 3rem;
+  height: 4rem;
   border: 1px solid rgba(234, 94, 19, 0.2);
-  padding: 0.5rem;
+  padding: 1rem;
   border-radius: 0rem;
   cursor: pointer;
   transition: background-color 0.3s ease, color 0.3s ease;
@@ -223,15 +234,6 @@ export default {
   margin: 0 1rem;
 }
 
-.tokenizer-selection {
-  margin-left: 1rem;
-}
-
-.row-search-tokenizer {
-  display: flex;
-  justify-content: start !important;
-}
-
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.3s ease;
@@ -240,5 +242,25 @@ export default {
 .fade-enter-from,
 .fade-leave-to {
   opacity: 0;
+}
+
+.year-filter,
+.search-method,
+.tokenizer-option,
+.page-size {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: 0.5rem;
+  flex-grow: 1;
+}
+
+@media screen and (max-width: 1920px) {
+}
+
+@media screen and (max-width: 576px) {
+  .pagination-btn .button-text {
+    display: none;
+  }
 }
 </style>
