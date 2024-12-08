@@ -55,13 +55,17 @@ body {
 }
 
 .medium-text {
-  font-size: 1.2rem !important;
+  font-size: 1.75rem !important;
 }
 
 @media screen and (max-width: 1920px) {
   .container {
     margin-left: 12rem;
     margin-right: 12rem;
+  }
+
+  .medium-text {
+    font-size: 1.2rem !important;
   }
 }
 
@@ -83,6 +87,10 @@ body {
   .container {
     margin-left: 3rem;
     margin-right: 3rem;
+  }
+
+  .medium-text {
+    font-size: 0.8rem !important;
   }
 }
 
