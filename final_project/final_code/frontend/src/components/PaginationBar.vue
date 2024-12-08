@@ -6,7 +6,7 @@
         <Select
           checkmark
           showClear=""
-          class="custom-selector medium-text align-vertical-center"
+          class="custom-selector align-vertical-center"
           v-model="selectedYear"
           :options="yearOptions"
           placeholder="All years"
@@ -21,7 +21,7 @@
         <span class="medium-text">Search method</span>
         <Select
           checkmark
-          class="custom-selector medium-text align-vertical-center"
+          class="custom-selector align-vertical-center"
           v-model="selectedSearchMethod"
           :options="searchMethodOptions"
           placeholder="Select search method"
@@ -40,7 +40,7 @@
           <span class="medium-text">Tokenizer</span>
           <Select
             checkmark
-            class="custom-selector medium-text align-vertical-center"
+            class="custom-selector align-vertical-center"
             v-model="selectedTokenizer"
             :options="tokenizerOptions"
             placeholder="Select a tokenizer"
@@ -56,7 +56,7 @@
         <span class="medium-text">Items per page</span>
         <Select
           checkmark
-          class="custom-selector medium-text align-vertical-center"
+          class="custom-selector align-vertical-center"
           v-model="selectedPageSize"
           :options="pageSizes"
           :placeholder="selectedPageSize"
