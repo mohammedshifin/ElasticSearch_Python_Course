@@ -255,7 +255,15 @@ export default {
   flex-grow: 1;
 }
 
-@media screen and (max-width: 1920px) {
+@media screen and (max-width: 992px) {
+  .custom-selector {
+    height: 3rem;
+  }
+
+  .pagination-btn {
+    height: 3rem;
+    padding: 0.5rem;
+  }
 }
 
 @media screen and (max-width: 576px) {
