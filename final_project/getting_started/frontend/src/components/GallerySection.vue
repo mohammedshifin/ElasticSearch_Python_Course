@@ -59,16 +59,16 @@ export default {
   computed: {
     results() {
       return this.searchResults.results || [];
-    }
+    },
   },
   watch: {
-    'searchResults.timestamp': {
+    "searchResults.timestamp": {
       handler(newVal) {
         this.searchTimestamp = newVal;
         this.imageLoaded = {};
       },
-      immediate: true
-    }
+      immediate: true,
+    },
   },
   methods: {
     showImage(image) {
@@ -84,15 +84,14 @@ export default {
 
 <style scoped>
 .container {
-  margin-top: 5rem;
+  margin-top: 1rem;
   margin-bottom: 5rem;
 }
 
 .gallery_grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(50rem, 1fr));
+  grid-template-columns: repeat(2, 1fr);
   gap: 2rem;
-  max-width: 100rem;
   margin: 0 auto;
 }
 
@@ -109,27 +108,27 @@ export default {
 }
 
 .card_content {
-  display: grid;
-  grid-template-columns: 18.75rem 1fr;
-  min-height: 18.75rem;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
 }
 
 .image_container {
   position: relative;
-  width: 18.75rem;
-  height: 18.75rem;
+  width: 100%;
+  height: 500px;
   overflow: hidden;
   background: rgba(255, 255, 255, 0.05);
   cursor: pointer;
+  flex-shrink: 0;
 }
 
 .card_image {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.3s ease;
   opacity: 0;
-  transition: opacity 0.3s ease;
+  transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
 .card_image.image-loaded {
@@ -148,7 +147,7 @@ export default {
 }
 
 .card_title {
-  color: #ea5e13;
+  color: var(--primary-color);
   margin: 0 0 1rem 0rem;
   font-size: 2rem;
   font-weight: bold;
@@ -160,11 +159,6 @@ export default {
   line-height: 1.75;
   flex-grow: 1;
   font-size: 1rem;
-  overflow: hidden;
-  display: -webkit-box;
-  -webkit-line-clamp: 6;
-  line-clamp: 6;
-  -webkit-box-orient: vertical;
 }
 
 .card_date {
@@ -196,6 +190,16 @@ export default {
   }
   100% {
     background-position: -200% 0;
+  }
+}
+
+@media (max-width: 992px) {
+  .gallery_grid {
+    grid-template-columns: 1fr;
+  }
+
+  .image_container {
+    height: auto;
   }
 }
 </style>

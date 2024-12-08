@@ -7,7 +7,7 @@
             <button
               class="action-button close-button"
               @click.stop="$emit('close')"
-              title="Close"
+              v-tooltip.top="'Close'"
             >
               <i class="fas fa-times"></i>
             </button>
@@ -73,7 +73,7 @@ export default {
   max-width: 100%;
   max-height: 90vh;
   object-fit: contain;
-  border: 2px solid #ea5e13;
+  border: 2px solid var(--primary-color);
   box-shadow: 0 0 1.25rem rgba(234, 94, 19, 0.3);
 }
 
