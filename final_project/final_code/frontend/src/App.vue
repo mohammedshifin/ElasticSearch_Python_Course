@@ -22,6 +22,7 @@ export default {
   --p-select-placeholder-color: #fff !important;
   --p-select-dropdown-color: #fff !important;
   --p-select-clear-icon-color: #fff !important;
+  --p-select-lg-font-size: 1.75rem !important;
 }
 
 body {
@@ -77,6 +78,10 @@ body {
 }
 
 @media screen and (max-width: 1920px) {
+  :root {
+    --p-select-lg-font-size: 1.2rem !important;
+  }
+
   .container {
     margin-left: 12rem;
     margin-right: 12rem;
@@ -106,6 +111,9 @@ body {
 }
 
 @media screen and (max-width: 768px) {
+  :root {
+    --p-select-lg-font-size: 0.8rem !important;
+  }
   .container {
     margin-left: 3rem;
     margin-right: 3rem;
