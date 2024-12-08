@@ -48,7 +48,7 @@
     </Transition>
 
     <Transition name="fade">
-      <div v-if="noResultsFound" class="no-results-message">
+      <div v-if="noResultsFound" class="no-results-message medium-text">
         <i class="fas fa-search"></i> No results found.
       </div>
     </Transition>
@@ -267,7 +267,6 @@ export default {
 .no-results-message {
   margin-top: 2rem;
   text-align: center;
-  font-size: 1.5rem;
   color: #666;
 }
 
