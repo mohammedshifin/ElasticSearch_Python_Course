@@ -35,7 +35,7 @@
     <Transition name="fade">
       <PaginationBar
         ref="paginationBar"
-        v-show="canPerformSearch"
+        v-if="canPerformSearch"
         :currentPage="currentPage"
         :maxPages="max_pages"
         :yearOptions="yearOptions"
@@ -88,6 +88,11 @@ export default {
       if (this.searchQuery !== "") {
         this.getYearOptions();
         this.handleSearch();
+      } else {
+        this.$emit("search-results", {
+          results: [],
+          timestamp: Date.now(),
+        });
       }
     },
     pageSize() {
