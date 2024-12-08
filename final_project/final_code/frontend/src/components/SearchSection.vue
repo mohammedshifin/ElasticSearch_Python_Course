@@ -202,7 +202,7 @@ export default {
 .image-logo {
   display: block;
   width: 100%;
-  margin-bottom: 5rem;
+  margin-bottom: 10rem;
 }
 
 .search-container {
@@ -279,6 +279,10 @@ export default {
   .image-container {
     width: 10rem;
   }
+
+  .image-logo {
+    margin-bottom: 6rem;
+  }
 }
 
 @media screen and (max-width: 1440px) {
@@ -288,6 +292,10 @@ export default {
   
   .image-container {
     width: 10rem;
+  }
+
+  .image-logo {
+    margin-bottom: 5rem;
   }
 }
 
@@ -309,6 +317,10 @@ export default {
   .image-container {
     width: 5rem;
   }
+
+  .image-logo {
+    margin-bottom: 4rem;
+  }
 }
 
 @media screen and (max-width: 576px) {
@@ -324,6 +336,10 @@ export default {
 
   .image-container {
     width: 3rem;
+  }
+
+  .image-logo {
+    margin-bottom: 3rem;
   }
 }
 </style>
