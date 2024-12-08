@@ -23,7 +23,6 @@
       <span class="icon-container">
         <Transition name="fade">
           <i
-            v-if="searchQuery"
             class="fas fa-times clear-icon"
             @click="clearSearch"
             v-tooltip.top="'Clear search'"
@@ -207,11 +206,13 @@ export default {
 
 .search-container {
   width: 100%;
+  position: relative;
+  display: inline-block;
 }
 
 .icon-container {
   position: absolute;
-  right: 0.625rem;
+  right: 1.5rem;
   top: 50%;
   transform: translateY(-50%);
   display: flex;
@@ -287,6 +288,10 @@ export default {
   .input-text {
     height: 4rem;
   }
+
+  .icon-container {
+    right: 1rem;
+  }
 }
 
 @media screen and (max-width: 1440px) {
@@ -314,6 +319,10 @@ export default {
   
   .input-text {
     height: 3rem;
+  }
+
+  .icon-container {
+    right: 0.625rem;
   }
 }
 
