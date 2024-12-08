@@ -145,7 +145,9 @@ export default {
         })
         .catch((error) => {
           console.error(error);
-          this.errorMessage = error.response.data;
+          this.errorMessage = error.response
+            ? error.response.data
+            : 'An error occurred. Please try again.';
           this.errorExists = true;
         });
     },
