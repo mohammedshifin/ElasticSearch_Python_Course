@@ -32,8 +32,8 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-left: 5rem;
-  margin-right: 5rem;
+  margin-left: 20rem;
+  margin-right: 20rem;
 }
 
 .action-button {
@@ -57,4 +57,47 @@ body {
 .medium-text {
   font-size: 1.2rem !important;
 }
+
+@media screen and (max-width: 1920px) {
+  .container {
+    margin-left: 12rem;
+    margin-right: 12rem;
+  }
+}
+
+@media screen and (max-width: 1440px) {
+  .container {
+    margin-left: 10rem;
+    margin-right: 10rem;
+  }
+}
+
+@media screen and (max-width: 992px) {
+  .container {
+    margin-left: 5rem;
+    margin-right: 5rem;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .container {
+    margin-left: 3rem;
+    margin-right: 3rem;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .container {
+    margin-left: 2rem;
+    margin-right: 2rem;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .container {
+    margin-left: 1rem;
+    margin-right: 1rem;
+  }
+}
+
 </style>
