@@ -103,7 +103,6 @@ async def semantic_search(
                         "knn": {
                             "field": "embedding",
                             "query_vector": embedded_query,
-                            # Because we have 3333 documents, we can return them all.
                             "k": 1e4
                         }
                     }
@@ -183,8 +182,8 @@ async def get_docs_per_year_count(search_query: str, tokenizer: str = "Standard"
                     "docs_per_year": {
                         "date_histogram": {
                             "field": "date",
-                            "calendar_interval": "year",  # Group by year
-                            "format": "yyyy"             # Format the year in the response
+                            "calendar_interval": "year", 
+                            "format": "yyyy"  
                         }
                     }
                 },
